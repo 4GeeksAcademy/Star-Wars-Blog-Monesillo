@@ -1,43 +1,67 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
-
+/*
+import React, { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 
-import "../../styles/demo.css";
+const backupImageUrl = 'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png';
 
-export const Demo = () => {
-	const { store, actions } = useContext(Context);
+const Demo = () => {
+    const { id } = useParams();
+    const { store } = useContext(Context);
+    const [item, setItem] = useState(null);
 
-	return (
-		<div className="container">
-			<ul className="list-group">
-				{store.demo.map((item, index) => {
-					return (
-						<li
-							key={index}
-							className="list-group-item d-flex justify-content-between"
-							style={{ background: item.background }}>
-							<Link to={"/single/" + index}>
-								<span>Link to: {item.title}</span>
-							</Link>
-							{// Conditional render example
-							// Check to see if the background is orange, if so, display the message
-							item.background === "orange" ? (
-								<p style={{ color: item.initial }}>
-									Check store/flux.js scroll to the actions to see the code
-								</p>
-							) : null}
-							<button className="btn btn-success" onClick={() => actions.changeColor(index, "orange")}>
-								Change Color
-							</button>
-						</li>
-					);
-				})}
-			</ul>
-			<br />
-			<Link to="/">
-				<button className="btn btn-primary">Back home</button>
-			</Link>
-		</div>
-	);
+    useEffect(() => {
+        const fetchItemDetails = async () => {
+            try {
+                const character = store.characters.find(c => c.uid === id);
+                const planet = store.planets.find(p => p.uid === id);
+                const vehicle = store.vehicles.find(v => v.uid === id);
+                
+                if (character) {
+                    setItem(character);
+                } else if (planet) {
+                    setItem(planet);
+                } else if (vehicle) {
+                    setItem(vehicle);
+                } else {
+                    setItem(null);
+                }
+            } catch (error) {
+                console.error("Error fetching item details:", error);
+            }
+        };
+
+        fetchItemDetails();
+    }, [id, store.characters, store.planets, store.vehicles]);
+
+    return (
+        <div className="container mt-5">
+            {item ? (
+                <div className="detail-card">
+                    <img 
+                        src={item.imageUrl || backupImageUrl} 
+                        alt={item.name} 
+                        className="detail-card-img" 
+                        onError={(e) => e.target.src = backupImageUrl} 
+                    />
+                    <div className="detail-card-body">
+                        <h5 className="detail-card-title">{item.name}</h5>
+                        <p className="detail-card-text">
+                            {item.hair_color && <><strong>Hair Color:</strong> {item.hair_color} <br /></>}
+                            {item.eye_color && <><strong>Eye Color:</strong> {item.eye_color} <br /></>}
+                            {item.gender && <><strong>Gender:</strong> {item.gender} <br /></>}
+                            {item.population && <><strong>Population:</strong> {item.population} <br /></>}
+                            {item.terrain && <><strong>Terrain:</strong> {item.terrain} <br /></>}
+                            {item.model && <><strong>Model:</strong> {item.model} <br /></>}
+                            {item.manufacturer && <><strong>Manufacturer:</strong> {item.manufacturer} <br /></>}
+                        </p>
+                    </div>
+                </div>
+            ) : (
+                <div>No details available.</div>
+            )}
+        </div>
+    );
 };
+
+export default Demo; */
